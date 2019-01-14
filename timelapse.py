@@ -3,6 +3,7 @@ import errno
 import os
 import sys
 import threading
+import socket
 from datetime import datetime
 from time import sleep
 import yaml
@@ -67,7 +68,7 @@ def capture_image():
         set_camera_options(camera)
 
         # Capture a picture.
-        camera.capture(dir + '/image{0:05d}.jpg'.format(image_number))
+        camera.capture(dir + socket.getHostname() + datetime.now().strftime('%H-%M-%S') + '.jpg')
         camera.close()
 
         if (image_number < (config['total_images'] - 1)):
@@ -80,23 +81,12 @@ def capture_image():
     except KeyboardInterrupt, SystemExit:
         print '\nTime-lapse capture cancelled.\n'
 
-# Create directory based on current timestamp.
+# Create directory based on current date.
 dir = os.path.join(
     sys.path[0],
-    'series-' + datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 )
 create_timestamped_dir(dir)
 
 # Kick off the capture process.
 capture_image()
-
-# TODO: These may not get called after the end of the threading process...
-# Create an animated gif (Requires ImageMagick).
-if config['create_gif']:
-    print '\nCreating animated gif.\n'
-    os.system('convert -delay 10 -loop 0 ' + dir + '/image*.jpg ' + dir + '-timelapse.gif')  # noqa
-
-# Create a video (Requires avconv - which is basically ffmpeg).
-if config['create_video']:
-    print '\nCreating video.\n'
-    os.system('avconv -framerate 20 -i ' + dir + '/image%05d.jpg -vf format=yuv420p ' + dir + '/timelapse.mp4')  # noqa
