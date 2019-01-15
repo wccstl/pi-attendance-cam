@@ -3,6 +3,7 @@ import os
 import sys
 
 from datetime import datetime
+from shutil import rmtree
 from smb.SMBConnection import SMBConnection
 
 config = yaml.safe_load(open(os.path.join(sys.path[0], 'config.yml')))
@@ -22,3 +23,6 @@ for picfile in os.listdir(pics_dir):
         file_stored = conn.storeFile('Data', today_dir + '/' + picfile, jpgfile)
 
 conn.close()
+
+if config['delete_pics']:
+    rmtree(pics_dir)
