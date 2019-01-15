@@ -22,6 +22,7 @@ for picfile in os.listdir(pics_dir):
     with open(pics_dir + picfile, 'rb') as jpgfile:
         file_stored = conn.storeFile('Data', today_dir + '/' + picfile, jpgfile)
 
+print('File transfer complete!')
 conn.close()
 
 if config['delete_pics']:
