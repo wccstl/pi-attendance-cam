@@ -17,6 +17,8 @@ After the capture is completed, the images will be stored in a directory named `
 
 For our usage, a simple cronjob is the best way to trigger the script. We take 3 snapshots every 10 minutes between the hours of 9-12am on Sunday mornings. This gets us more than enough pictures to get a pretty accurate sense of who was in attendance on Sunday morning.
 
+There is an `example.crontab` file in this repository. Use it as a starting point, if you need to. You can also use the excellent [Crontab Generator](https://crontab-generator.org/), as well.
+
 ## Run on Raspberry Pi Startup and manage timelapses via Systemd
 
 >For our attendance camera, we're not using the Systemd settings, but I'll keep this here for reference.
