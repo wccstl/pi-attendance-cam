@@ -84,7 +84,7 @@ def capture_image():
 # Create directory based on current date.
 dir = os.path.join(
     sys.path[0],
-    datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    'pics-' + datetime.now().strftime('%Y-%m-%d')
 )
 create_timestamped_dir(dir)
 
