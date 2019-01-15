@@ -68,7 +68,7 @@ def capture_image():
         set_camera_options(camera)
 
         # Capture a picture.
-        camera.capture(dir + '/' + datetime.now().strftime('%H-%M-%S') + '.jpg')
+        camera.capture(dir + '/' + datetime.now().strftime('%H-%M-%S-') + socket.gethostname() + '.jpg')
         camera.close()
 
         if (image_number < (config['total_images'] - 1)):
