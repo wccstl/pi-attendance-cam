@@ -1,17 +1,24 @@
 import yaml
-import tempfile
 import os
 import sys
 
 from datetime import datetime
 from smb.SMBConnection import SMBConnection
 
-config = yaml.safe_load(open(os.path.join(sys.path[0], "config.yml")))
+config = yaml.safe_load(open(os.path.join(sys.path[0], 'config.yml')))
+today_dir = '/Attendance/' + datetime.now().strftime('%Y') + '/' + datetime.now().strftime('%Y-%m-%d')
+pics_dir = os.path.join(sys.path[0], 'pics-' + datetime.now().strftime('%Y-%m-%d') + '/')
 
 conn = SMBConnection(config['UserID'], config['password'], config['client_machine_name'], config['server_name'])
 assert conn.connect(config['server_ip'])
 
-file_obj = tempfile.NamedTemporaryFile(delete=False)
-file_attributes, filesize = conn.retrieveFile('Data', '/Group.jpg', file_obj)
+try:
+    conn.listPath('Data', today_dir)
+except:
+    conn.createDirectory('Data', today_dir)
 
-file_obj.close()
+for picfile in os.listdir(pics_dir):
+    with open(pics_dir + picfile, 'rb') as jpgfile:
+        file_stored = conn.storeFile('Data', today_dir + '/' + picfile, jpgfile)
+
+conn.close()
