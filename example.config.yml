@@ -15,7 +15,7 @@ total_images: 10
 interval: 1
 
 #####################
-# Advanced settings #
+# Advanced Settings #
 #####################
 
 # ISO value. 0 = auto, 60-800 for manual ISO.
@@ -31,3 +31,14 @@ white_balance: { }
 
 # Rotate the images taken by the camera. Possible value are 0, 90, 180 or 270
 rotation: 0
+
+################
+# SMB Settings #
+################
+
+UserID: 'smbusername'
+password: 'smbpassword'
+client_machine_name: 'nameofthiscomputer'
+server_name: 'nameofserver'
+server_ip: '10.13.37.2'
+
