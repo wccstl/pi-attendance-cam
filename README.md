@@ -5,11 +5,11 @@ Big shout to @geerlingguy and his [timelapse camera app](https://github.com/geer
 ## Usage
 
   1. See the original blog post for an in-depth overview: [Raspberry Pi Zero W as a headless time-lapse camera](https://www.jeffgeerling.com/blog/2017/raspberry-pi-zero-w-headless-time-lapse-camera).
-  2. Install dependencies: `sudo apt-get install -y python-picamera python-yaml`
+  2. Install dependencies: `sudo apt-get install -y python3-picamera python3-yaml`
   3. Download or clone this repository to your Pi.
   4. Copy `example.config.yml` to `config.yml`.
   5. Configure the timelapse by modifying values in `config.yml`.
-  6. In the Terminal, `cd` into this project directory and run `python timelapse.py`.
+  6. In the Terminal, `cd` into this project directory and run `python3 timelapse.py`.
 
 After the capture is completed, the images will be stored in a directory named `series-[current date]`.
 

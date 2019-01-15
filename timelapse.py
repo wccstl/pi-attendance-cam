@@ -74,12 +74,12 @@ def capture_image():
         if (image_number < (config['total_images'] - 1)):
             image_number += 1
         else:
-            print '\nTime-lapse capture complete!\n'
+            print('Time-lapse capture complete!')
             # TODO: This doesn't pop user into the except block below :(.
-            sys.exit()
+            #sys.exit()
 
-    except KeyboardInterrupt, SystemExit:
-        print '\nTime-lapse capture cancelled.\n'
+    except (KeyboardInterrupt, SystemExit):
+        print('Time-lapse capture cancelled.')
 
 # Create directory based on current date.
 dir = os.path.join(
