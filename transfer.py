@@ -3,6 +3,7 @@ import os
 import sys
 
 from datetime import datetime
+from smb import smb_structs
 from smb.SMBConnection import SMBConnection
 
 config = yaml.safe_load(open(os.path.join(sys.path[0], 'config.yml')))
@@ -37,7 +38,7 @@ assert conn.connect(config['server_ip'])
 
 try:
     conn.listPath('Data', today_dir)
-except OperationFailure:
+except smb_structs.OperationFailure:
     conn.createDirectory('Data', today_dir)
 
 store_files_on_server(pics_dir)
