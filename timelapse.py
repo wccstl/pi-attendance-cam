@@ -68,7 +68,8 @@ def capture_image():
         set_camera_options(camera)
 
         # Capture a picture.
-        camera.capture(dir + '/' + datetime.now().strftime('%H-%M-%S-') + socket.gethostname() + '.jpg')
+        camera.capture(dir + '/' + datetime.now().strftime('%H-%M-%S-') +
+                       socket.gethostname() + '.jpg')
         camera.close()
 
         if (image_number < (config['total_images'] - 1)):
@@ -76,10 +77,11 @@ def capture_image():
         else:
             print('Time-lapse capture complete!')
             # TODO: This doesn't pop user into the except block below :(.
-            #sys.exit()
+            # sys.exit()
 
     except (KeyboardInterrupt, SystemExit):
         print('Time-lapse capture cancelled.')
+
 
 # Create directory based on current date.
 dir = os.path.join(
