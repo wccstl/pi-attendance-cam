@@ -3,12 +3,13 @@ import os
 import sys
 
 from datetime import datetime
-from shutil import rmtree
+#from shutil import rmtree
 from smb.SMBConnection import SMBConnection
 
 config = yaml.safe_load(open(os.path.join(sys.path[0], 'config.yml')))
 today_dir = '/Attendance/' + datetime.now().strftime('%Y') + '/' + datetime.now().strftime('%Y-%m-%d')
 pics_dir = os.path.join(sys.path[0], 'pics-' + datetime.now().strftime('%Y-%m-%d') + '/')
+try_again = []
 
 conn = SMBConnection(config['UserID'], config['password'], config['client_machine_name'], config['server_name'])
 assert conn.connect(config['server_ip'])
@@ -18,12 +19,27 @@ try:
 except:
     conn.createDirectory('Data', today_dir)
 
-for picfile in os.listdir(pics_dir):
-    with open(pics_dir + picfile, 'rb') as jpgfile:
-        file_stored = conn.storeFile('Data', today_dir + '/' + picfile, jpgfile)
+def store_files_on_server(dir):
+    for picfile in os.listdir(dir):
+        picfile_location = dir + picfile
+        with open(picfile_location, 'rb') as jpgdata:
+            bytes_stored = conn.storeFile('Data', today_dir + '/' + picfile, jpgdata)
+            if bytes_stored == os.path.getsize(picfile_location):
+                # File sizes are the same. Delete file, if configured to do so.
+                if config['delete_pics']:
+                    os.remove(picfile_location)
+            else:
+                # File sizes are different. Add to try_again[]
+                try_again.append(picfile)
 
-print('File transfer complete!')
-conn.close()
+store_files_on_server(pics_dir)
 
-if config['delete_pics']:
-    rmtree(pics_dir)
+if len(try_again) == 0:
+    print('File transfer complete!')
+    conn.close()
+    if config['delete_pics']:
+        os.rmdir(pics_dir)
+else:
+    print('File transfer incomplete! Attempting to transfer %d files...' % (len(try_again)) )
+    try_again = []
+    store_files_on_server(pics_dir)
