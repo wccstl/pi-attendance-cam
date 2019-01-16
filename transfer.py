@@ -3,7 +3,6 @@ import os
 import sys
 
 from datetime import datetime
-#from shutil import rmtree
 from smb.SMBConnection import SMBConnection
 
 config = yaml.safe_load(open(os.path.join(sys.path[0], 'config.yml')))
