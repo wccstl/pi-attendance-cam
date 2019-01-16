@@ -1,5 +1,7 @@
 # Raspberry Pi Attendance Camera
 
+[![Build Status](https://travis-ci.org/wccstl/pi-attendance-cam.svg?branch=master)](https://travis-ci.org/wccstl/pi-attendance-cam)
+
 Big shout to @geerlingguy and his [timelapse camera app](https://github.com/geerlingguy/pi-timelapse). This is basically just a customized version of his app. You should definitely go check it out!
 
 ## Usage
