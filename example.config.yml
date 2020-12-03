@@ -4,15 +4,16 @@
 ##################
 
 # Image resolution Set to empty object (`{ }`) to use default resolution.
-resolution: { }
-  # width: 480
-  # height: 270
+resolution: {
+  width: 3280
+  height: 2464
+}
 
 # The number of images to capture.
-total_images: 10
+total_images: 3
 
 # The interval between captures (in seconds).
-interval: 1
+interval: 5
 
 #####################
 # Advanced Settings #
@@ -44,4 +45,3 @@ password: 'smbpassword'
 client_machine_name: 'nameofthiscomputer'
 server_name: 'nameofserver'
 server_ip: '10.13.37.2'
-
