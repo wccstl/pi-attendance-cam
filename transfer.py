@@ -7,8 +7,8 @@ from smb import smb_structs
 from smb.SMBConnection import SMBConnection
 
 config = yaml.safe_load(open(os.path.join(sys.path[0], 'config.yml')))
-today_dir = '/Attendance/' + datetime.now().strftime('%Y') + '/' + \
-            datetime.now().strftime('%Y-%m-%d')
+year_dir = '/Attendance/' + datetime.now().strftime('%Y')
+today_dir = year_dir + '/' + datetime.now().strftime('%Y-%m-%d')
 pics_dir = os.path.join(sys.path[0],
                         'pics-' + datetime.now().strftime('%Y-%m-%d') + '/')
 try_again = []
@@ -39,7 +39,11 @@ assert conn.connect(config['server_ip'])
 try:
     conn.listPath('Data', today_dir)
 except smb_structs.OperationFailure:
-    conn.createDirectory('Data', today_dir)
+    try:
+        conn.createDirectory('Data', today_dir)
+    except smb_structs.OperationFailure:
+        conn.createDirectory('Data', year_dir)
+        conn.createDirectory('Data', today_dir)
 
 store_files_on_server(pics_dir)
 
